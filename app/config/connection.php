@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config.php';
-
 class Connection{
 
     private $host = DB_HOST;

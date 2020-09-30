@@ -1,6 +1,6 @@
 <?php
 
-require_once './config/config.php';
+require_once 'app/config/config.php';
 
 /* Create connection */
 $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -18,12 +18,12 @@ $sql = "CREATE TABLE IF NOT EXISTS `vehicles` (
   `price` varchar(20) NOT NULL,
   `location` varchar(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";
 
 if ($connection->query($sql) === TRUE) {
-    echo "Table disburs created successfully";
+    echo "Table Vehicle created successfully";
 }
  else {
     echo "Error creating table: " . $connection->error;

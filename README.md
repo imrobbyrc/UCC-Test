@@ -53,3 +53,13 @@ The vehicle needs to contain the following information:
   4. Has unit tests
   5. Task understanding
   6. Task completeness.
+
+
+## How To Run
+ - Clone this repository to webserver tools like laragon or xampp
+ - Create a new database 
+ - Change a config file to match with your configuration 
+ - Run the `migration.php` file by running it in terminal `php migration.php`
+ - You need to Run using **POSTMAN**
+ - For Saving or adding data don't forget to use param in url like `http://ucc-test.localhost/public/?url=vehicle/save`
+ - SPA not finish yet Sorry.
