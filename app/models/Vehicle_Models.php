@@ -21,7 +21,7 @@ class Vehicle_Models extends Connection{
 
     public function findByUid($uid){
 
-        $query = "SELECT count(id) FROM $this->table WHERE unique_identifier = '$uid'";
+        $query = "SELECT count(id) as total FROM $this->table WHERE unique_identifier = '$uid'";
 
         $queryExe = $this->conn->query($query);
         $result = [];
@@ -30,7 +30,7 @@ class Vehicle_Models extends Connection{
                 $result[] = $row;
             }
         }
-        return $result;
+        return $result[0]->total;
     }
 
     public function insertData($data){

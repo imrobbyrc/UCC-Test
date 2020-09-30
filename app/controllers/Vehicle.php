@@ -57,7 +57,7 @@ class Vehicle extends Controller {
 
             //check uid exist
             $check = $this->model('Vehicle_Models')->findByUid($data->unique_identifier);
-            if(count($check) > 0){
+            if($check > 0){
                 header('Content-Type: application/json');
                 echo json_encode(array('code' => 500, 'message' => 'The UID already Exist!'));
                 http_response_code(500);
