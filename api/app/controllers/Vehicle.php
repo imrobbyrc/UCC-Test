@@ -54,7 +54,21 @@ class Vehicle extends Controller {
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = json_decode(file_get_contents("php://input"));
+
+            $err = 0;
+            foreach($data as $key => $val){
+                if(isset($key) && $val = ""){
+                    $err++;
+                } 
+            }
+            if($err > 0){
+                header('Content-Type: application/json');
+                echo json_encode(array('code' => 500, 'message' => 'No Data Inserted!'));
+                http_response_code(500);
+                die;
+            }
             
+
             if(empty($data)){
                 header('Content-Type: application/json');
                 echo json_encode(array('code' => 500, 'message' => 'No Data Inserted!'));
@@ -72,10 +86,13 @@ class Vehicle extends Controller {
                 die;
             }
 
+            
             if(isset($volumes[0]) && strtolower($volumes[1]) == "cc"){
                 $newVolume = $volumes[0] / $this->ccToLiter;
             }elseif(isset($volumes[0]) && in_array(strtolower($volumes[1]), $this->cubicInch)){
                 $newVolume = $volumes[0] / $this->cidToLiter;
+            }else{
+                $newVolume = $volumes[0];
             }
 
             $data->engine_displacement = $newVolume."L";
