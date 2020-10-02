@@ -7,7 +7,8 @@ class VechicleService {
     }
 
     insertData(data){
-        return api.post("/?url=vehicle/save",data);
+        console.log(JSON.stringify(data))
+        return api.post("/?url=vehicle/save",JSON.stringify(data));
     }
 }
 

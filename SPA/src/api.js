@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export default axios.create({
-   
-    baseURL: 'http://ucc-test.localhost/public/',
-    headers: {
-        'Content-type': 'application/json'
-    }
+    withCredentials: true,
+    baseURL: 'http://ucc-test.localhost',
+    // headers: {
+    //     'Content-type': 'application/json'
+    // }
 });

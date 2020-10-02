@@ -7,7 +7,6 @@
                 <table class="table table-hover">
                     <thead>
                     <tr class="text-center">
-                        <th scope="col">NO</th>
                         <th scope="col">UID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Engine Displacement</th>
@@ -18,7 +17,6 @@
                     </thead>
                     <tbody v-for="vehicle in vehicles" :key="vehicle.id">
                     <tr>
-                        <td scope="row">1</td>
                         <td>{{vehicle.unique_identifier}}</td>
                         <td>{{vehicle.name}}</td>
                         <td class="text-center">{{vehicle.engine_displacement}}</td>
@@ -36,29 +34,29 @@
                     <form>
                     <div class="form-group">
                         <label for="uid">Uniqe Identifier (UID)</label>
-                        <input type="text" class="form-control" id="uid" placeholder="Uniqe Identifier">
+                        <input type="text" class="form-control" id="unique_identifier" placeholder="Uniqe Identifier" v-model="vehicleForm.unique_identifier">
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Name">
+                        <input type="text" class="form-control" id="name" placeholder="Name" v-model="vehicleForm.name">
                     </div>
                     <div class="form-group">
                         <label for="engineDisplacement">Engine Displacement</label>
-                        <input type="text" class="form-control" id="engineDisplacement" placeholder="Engine Displacement">
+                        <input type="text" class="form-control" id="engine_displacement" placeholder="Engine Displacement" v-model="vehicleForm.engine_displacement">
                     </div>
                     <div class="form-group">
                         <label for="enginePower">Engine Power</label>
-                        <input type="text" class="form-control" id="enginePower" placeholder="Engine Power">
+                        <input type="text" class="form-control" id="engine_power" placeholder="Engine Power" v-model="vehicleForm.engine_power">
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="text" class="form-control" id="price" placeholder="Price">
+                        <input type="text" class="form-control" id="price" placeholder="Price" v-model="vehicleForm.price">
                     </div>
                     <div class="form-group">
                         <label for="location">Location</label>
-                        <input type="text" class="form-control" id="location" placeholder="Location">
+                        <input type="text" class="form-control" id="location" placeholder="Location" v-model="vehicleForm.location">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-3" @click="addData"> Submit</button>
                     </form>
                 </div>
             </div>
@@ -73,7 +71,15 @@ export default {
     name: 'VehicleView',
     data(){
         return{
-            vehicles: []
+            vehicles: [],
+            vehicleForm : {
+                unique_identifier : '',
+                name : '',
+                engine_displacement : '',
+                engine_power : '',
+                price : '',
+                location : ''
+            }
         }
     },
     mounted() {
@@ -88,7 +94,26 @@ export default {
                 .catch( e => {
                     console.log(e);
                 })
-        }
+        },
+        addData() {
+        var data = {
+            unique_identifier : this.vehicleForm.unique_identifier,
+            name : this.vehicleForm.name,
+            engine_displacement : this.vehicleForm.engine_displacement,
+            engine_power : this.vehicleForm.engine_power,
+            price : this.vehicleForm.price,
+            location : this.vehicleForm.location
+        };
+
+        VechicleService.insertData(data)
+            .then(res => {
+                console.log(res.data.vehicle)
+                this.load()
+            })
+                .catch(e => {
+                console.log(e);
+            });
+        },
     }
     }
 </script>

@@ -12,24 +12,16 @@ class Vehicle extends Controller {
     }
 
     function cors() {
-        // Allow from any origin
-        if (isset($_SERVER['HTTP_ORIGIN'])) {
-            header("Access-Control-Allow-Origin:".SPA_URL);
-            header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
-            header("Access-Control-Allow-Headers: Origin, Authorization, X-Requested-With, Content-Type, Accept");
-        }
-    
-        // Access-Control headers are received during OPTIONS requests
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    
-            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-                // may also be using PUT, PATCH, HEAD etc
-                header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
-    
-            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
-                header("Access-Control-Allow-Headers: Origin, Authorization, X-Requested-With, Content-Type, Accept");
-    
-            exit(0);
+        
+        header("Access-Control-Allow-Origin:".SPA_URL);
+        header('Access-Control-Allow-Credentials: true');
+        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+            header('Access-Control-Allow-Origin:'.SPA_URL);
+            header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
+            header('Access-Control-Allow-Headers: token, Content-Type,origin');
+            header('Access-Control-Max-Age: 1728000');
+            header('Content-Length: 0');
+            die();
         }
     }
     
@@ -61,8 +53,15 @@ class Vehicle extends Controller {
         
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            $data = (object) $_POST;
+            $data = json_decode(file_get_contents("php://input"));
+            
+            if(empty($data)){
+                header('Content-Type: application/json');
+                echo json_encode(array('code' => 500, 'message' => 'No Data Inserted!'));
+                http_response_code(500);
+                die;
+            }
+            
             $volumes = str_replace(" ","",$data->engine_displacement);
             $volumes = preg_split('/(?<=[0-9])(?=[a-z]+)/i',$volumes);
             if(!in_array(strtolower($volumes[1]),$this->volume)){

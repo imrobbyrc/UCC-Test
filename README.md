@@ -59,7 +59,8 @@ The vehicle needs to contain the following information:
  - Clone this repository to webserver tools like laragon or xampp
  - Create a new database 
  - Change a config file to match with your configuration 
+ - Dont forget to change **SPA_URL** in api/config/config.php match with your SPA url
  - Run the `migration.php` file by running it in terminal `php migration.php`
- - You need to Run using **POSTMAN**
- - For Saving or adding data don't forget to use param in url like `http://ucc-test.localhost/public/?url=vehicle/save`
- - SPA not finish yet Sorry.
+ - To Run SPA you need to run `npm install` in SPA folder to download all packages needed.
+ - After that change **baseURL** value in **SPA/api** match with your api url
+ - and then you can run dev build by type `npm run serve` in terminal.
